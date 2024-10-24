@@ -36,6 +36,7 @@ fun SimpleStats(
     windowSizeClass: WindowSizeClass,
 ) {
     val na = stringResource(id = R.string.n_a)
+    val never = stringResource(id = R.string.never)
 
     val context = LocalContext.current
 
@@ -53,6 +54,12 @@ fun SimpleStats(
                 false -> statsState.lastLibraryUpdate
             }
 
+        val libUpdateAttempt =
+            when (statsState.lastLibraryUpdateAttempt.isEmpty()) {
+                true -> never
+                false -> statsState.lastLibraryUpdateAttempt
+            }
+
         listOf(
                 numberFormat.format(statsState.mangaCount).toString() to
                     context.getString(R.string.total_manga),
@@ -64,6 +71,7 @@ fun SimpleStats(
                     context.getString(R.string.chapters_bookmarked),
                 statsState.readDuration to context.getString(R.string.read_duration),
                 libUpdates to context.getString(R.string.last_library_update),
+                libUpdateAttempt to context.getString(R.string.last_library_update_attempt),
                 numberFormat.format(statsState.globalUpdateCount).toString() to
                     context.getString(R.string.global_update_manga),
                 statsState.averageMangaRating.toString() to
@@ -74,8 +82,14 @@ fun SimpleStats(
                     context.getString(R.string.manga_tracked),
                 numberFormat.format(statsState.tagCount).toString() to
                     context.getString(R.string.total_tags),
-                numberFormat.format(statsState.mergeCount).toString() to
-                    context.getString(R.string.merged),
+                numberFormat.format(statsState.komgaMergeCount).toString() to
+                    context.getString(R.string.komga_merged),
+                numberFormat.format(statsState.mangaLifeMergeCount).toString() to
+                    context.getString(R.string.mangalife_merged),
+                numberFormat.format(statsState.toonilyMergeCount).toString() to
+                    context.getString(R.string.toonily_merged),
+                numberFormat.format(statsState.weebCentralMergeCount).toString() to
+                    context.getString(R.string.weebcentral_merged),
             )
             .toImmutableList()
     }
